@@ -22,6 +22,8 @@ Plug 'prabirshrestha/vim-lsp'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
+Plug 'mattn/vim-lsp-settings'
+
 Plug 'itchyny/lightline.vim'
 
 Plug 'tpope/vim-commentary'
@@ -36,6 +38,9 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
 " colorscheme
 set termguicolors
 colorscheme nord
+" For tmux
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 syntax enable
 
 " appearance
@@ -134,14 +139,14 @@ let g:lsp_diagnostics_signs_warning = {'text': '▪'}
 "                 \ },
 "             \ }
 
-if executable('pyls')
-    " pip install python-language-server
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'pyls',
-        \ 'cmd': {server_info->['pyls']},
-        \ 'allowlist': ['python'],
-        \ })
-endif
+" if executable('pyls')
+"     " pip install python-language-server
+"     au User lsp_setup call lsp#register_server({
+"         \ 'name': 'pyls',
+"         \ 'cmd': {server_info->['pyls']},
+"         \ 'allowlist': ['python'],
+"         \ })
+" endif
 
 function! s:on_lsp_buffer_enabled() abort
     " setlocal omnifunc=lsp#complete
