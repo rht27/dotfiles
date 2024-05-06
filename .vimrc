@@ -4,8 +4,11 @@
 "   (_)___/_/_/_/_/_/  \__/ 
 " ------------------------------                          
 
-" python path
-set pythonthreedll=~/AppData/Local/Programs/Python/Python38/python38.dll
+" OS
+" Set python path
+if has("win32unix")
+  set pythonthreedll=~/AppData/Local/Programs/Python/Python38/python38.dll
+endif
 
 " plugins
 " Install vim-plug if not found
