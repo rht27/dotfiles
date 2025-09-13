@@ -61,6 +61,7 @@ echo "Install dependencies"
 # install starship
 if ! command -v starship > /dev/null; then
     echo "installing starship ..."
+    mkdir -p ~/.local/bin
     sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -y --bin-dir $HOME/.local/bin
 else
     echo "starship installed"
@@ -69,6 +70,7 @@ fi
 # install pueue
 if ! command -v pueue > /dev/null; then
     echo "installing pueue ..."
+    mkdir -p ~/.local/bin
     curl -fsSL -o ~/.local/bin/pueue https://github.com/Nukesor/pueue/releases/download/v3.4.1/pueue-linux-x86_64
     curl -fsSL -o ~/.local/bin/pueued https://github.com/Nukesor/pueue/releases/download/v3.4.1/pueued-linux-x86_64
     chmod u+x ~/.local/bin/pueue*
