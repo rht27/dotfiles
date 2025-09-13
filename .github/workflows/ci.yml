@@ -5,14 +5,14 @@ on: [push]
 jobs:
   ubuntu:
     runs-on: ubuntu-latest
-    container: ubuntu:latest
     steps:
-      - uses: actions/setup-python@v6
+      - name: Setup Python
+        uses: actions/setup-python@v6
         with:
-          python-verison: "3.13"
-      - name: update apt
+          python-version: "3.13"
+      - name: Update apt
         run: apt-get update
-      - name: install required packages
+      - name: Install required packages
         run: apt-get install -y curl git vim tmux
-      - name: install dotfiles
+      - name: Install dotfiles
         run: sh -c "$(curl -fsSL https://raw.githubusercontent.com/rht27/dotfiles/main/install.sh)"
