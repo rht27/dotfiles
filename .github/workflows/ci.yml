@@ -3,12 +3,6 @@ name: CI
 on: [push]
 
 jobs:
-  echo-hello:
-    runs-on: ubuntu-latest
-    steps:
-      - name: echo
-        run: echo "hello github actions"
-
   ubuntu:
     runs-on: ubuntu-latest
     container: ubuntu:latest
