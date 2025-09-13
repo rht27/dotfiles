@@ -60,7 +60,7 @@ echo "Install dependencies"
 # install starship
 if ! command -v starship > /dev/null; then
     echo "installing starship ..."
-    curl -fsSL https://starship.rs/install.sh | sh
+    sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -y --bin-dir $HOME/.local/bin
 else
     echo "starship installed"
 fi
@@ -78,7 +78,7 @@ fi
 # install ranger
 if ! command -v ranger > /dev/null; then
     echo "installing ranger ..."
-    pip install ranger-fm
+    pip install --user ranger-fm
 else
     echo "ranger installed"
 fi
