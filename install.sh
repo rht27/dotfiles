@@ -45,6 +45,7 @@ else
     fi
 fi
 
+mkdir -p ~/.config
 ln -snvf ~/dotfiles/.vimrc ~/
 ln -snvf ~/dotfiles/.tmux.conf ~/
 
