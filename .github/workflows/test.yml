@@ -1,0 +1,22 @@
+name: test
+
+on: 
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches: [main]
+
+jobs:
+  ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update and install required packages
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y curl git vim tmux
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Install dotfiles
+        run: sh -c "$(curl -fsSL https://raw.githubusercontent.com/rht27/dotfiles/main/install.sh)"
