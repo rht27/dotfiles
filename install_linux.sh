@@ -1,0 +1,81 @@
+#!/bin/bash -ue
+
+echo "Start installation for Linux"
+
+echo "Check configs and make symbolic links"
+# .bashrc
+if [ -e ~/.bashrc ]; then
+    echo "~/.bashrc already exists"
+else
+    echo "~/.bashrc does not exist and try to copy from /etc/skel/.bashrc"
+    if [ -e /etc/skel/.bashrc ]; then
+        cp /etc/skel/.bashrc ~/
+    else
+        ln -snvf ~/dotfiles/.bashrc ~/
+    fi
+fi
+if ! grep -q ". ~/dotfiles/.dotfiles.bashrc" ~/.bashrc; then
+    echo '. ~/dotfiles/.dotfiles.bashrc' >> ~/.bashrc
+fi
+
+# .profile
+if [ -e ~/.profile ]; then
+    echo "~/.profile already exists"
+else
+    echo "~/.profile does not exist and try to copy from /etc/skel/.profile"
+    if [ -e /etc/skel/.profile ]; then
+        cp -v /etc/skel/.profile ~/
+    fi
+fi
+
+mkdir -p ~/.config
+ln -snvf ~/dotfiles/.vimrc ~/
+ln -snvf ~/dotfiles/.tmux.conf ~/
+
+# starship
+ln -snvf ~/dotfiles/.config/starship.toml ~/.config/starship.toml
+
+# ranger
+mkdir -p ~/.config/ranger
+ln -snvf ~/dotfiles/.config/ranger/rc.conf ~/.config/ranger/rc.conf
+
+
+echo "Install dependencies"
+
+mkdir -p ~/.local/bin
+# set PATH
+if [ -e ~/.profile ]; then
+    if ! grep -q 'PATH="$HOME/.local/bin:$PATH"' ~/.profile; then
+        echo 'PATH="$HOME/.local/bin:$PATH"' >> ~/.profile
+    fi
+else
+    echo "~/.profile does not exist"
+    echo "Please set PATH to $HOME/.local/bin manually"
+    echo '    PATH="$HOME/.local/bin:$PATH"'
+fi
+
+# install starship
+if ! command -v starship > /dev/null; then
+    echo "installing starship ..."
+    sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -y --bin-dir $HOME/.local/bin
+else
+    echo "starship installed"
+fi
+
+# install pueue
+if ! command -v pueue > /dev/null; then
+    echo "installing pueue ..."
+    curl -fsSL -o ~/.local/bin/pueue https://github.com/Nukesor/pueue/releases/download/v3.4.1/pueue-linux-x86_64
+    curl -fsSL -o ~/.local/bin/pueued https://github.com/Nukesor/pueue/releases/download/v3.4.1/pueued-linux-x86_64
+    chmod u+x ~/.local/bin/pueue*
+else
+    echo "pueue installed"
+fi
+
+# install ranger
+if ! command -v ranger > /dev/null; then
+    echo "installing ranger ..."
+    pip install --user ranger-fm
+else
+    echo "ranger installed"
+fi
