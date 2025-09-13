@@ -10,13 +10,21 @@ jobs:
   ubuntu:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
       - name: Update and install required packages
         run: |
           sudo apt-get update
           sudo apt-get install -y curl git vim tmux
+
       - name: Setup Python
         uses: actions/setup-python@v6
         with:
           python-version: "3.13"
+
+      - name: Download install script
+        run: curl -fsSL https://raw.githubusercontent.com/rht27/dotfiles/main/install.sh
+
       - name: Install dotfiles
-        run: sh -c "$(curl -fsSL https://raw.githubusercontent.com/rht27/dotfiles/main/install.sh)"
+        run: sh install.sh
