@@ -7,6 +7,9 @@ jobs:
     runs-on: ubuntu-latest
     container: ubuntu:latest
     steps:
+      - uses: actions/setup-python@v6
+        with:
+          python-verison: "3.13"
       - name: update apt
         run: apt-get update
       - name: install required packages
