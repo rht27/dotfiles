@@ -12,8 +12,8 @@ jobs:
     steps:
       - name: Update and install required packages
         run: |
-          apt-get update
-          apt-get install -y curl git vim tmux
+          sudo apt-get update
+          sudo apt-get install -y curl git vim tmux
       - name: Setup Python
         uses: actions/setup-python@v6
         with:
