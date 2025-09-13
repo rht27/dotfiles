@@ -1,6 +1,10 @@
 name: CI
 
-on: [push]
+on: 
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches: [main]
 
 jobs:
   ubuntu:
@@ -8,8 +12,8 @@ jobs:
     steps:
       - name: Update and install required packages
         run: |
-          sudo apt-get update
-          sudo apt-get install -y curl git vim tmux
+          apt-get update
+          apt-get install -y curl git vim tmux
       - name: Setup Python
         uses: actions/setup-python@v6
         with:
