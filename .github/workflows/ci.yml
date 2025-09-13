@@ -7,7 +7,9 @@ jobs:
     runs-on: ubuntu-latest
     container: ubuntu:latest
     steps:
+      -name: update apt
+        run: apt-get update
       -name: install required packages
-        run: apt-get update && apt-get install -y curl git vim tmux
+        run: apt-get install -y curl git vim tmux
       -name: install dotfiles
         run: sh -c "$(curl -fsSL https://raw.githubusercontent.com/rht27/dotfiles/main/install.sh)"
