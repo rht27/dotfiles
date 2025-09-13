@@ -32,7 +32,7 @@ else
     fi
 fi
 if ! grep -q ". ~/dotfiles/.dotfiles.bashrc" ~/.bashrc; then
-    echo -e '# User settings \n. ~/dotfiles/.dotfiles.bashrc\n' >> ~/.bashrc
+    echo '. ~/dotfiles/.dotfiles.bashrc' >> ~/.bashrc
 fi
 
 # .profile
@@ -58,10 +58,22 @@ ln -snvf ~/dotfiles/.config/ranger/rc.conf ~/.config/ranger/rc.conf
 
 
 echo "Install dependencies"
+
+mkdir -p ~/.local/bin
+# set PATH
+if [ -e ~/.profile ]; then
+    if ! grep -q 'PATH="$HOME/.local/bin:$PATH"' ~/.profile; then
+        echo 'PATH="$HOME/.local/bin:$PATH"' >> ~/.profile
+    fi
+else
+    echo "~/.profile does not exist"
+    echo "Please set PATH to $HOME/.local/bin manually"
+    echo '    PATH="$HOME/.local/bin:$PATH"'
+fi
+
 # install starship
 if ! command -v starship > /dev/null; then
     echo "installing starship ..."
-    mkdir -p ~/.local/bin
     sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -y --bin-dir $HOME/.local/bin
 else
     echo "starship installed"
@@ -70,7 +82,6 @@ fi
 # install pueue
 if ! command -v pueue > /dev/null; then
     echo "installing pueue ..."
-    mkdir -p ~/.local/bin
     curl -fsSL -o ~/.local/bin/pueue https://github.com/Nukesor/pueue/releases/download/v3.4.1/pueue-linux-x86_64
     curl -fsSL -o ~/.local/bin/pueued https://github.com/Nukesor/pueue/releases/download/v3.4.1/pueued-linux-x86_64
     chmod u+x ~/.local/bin/pueue*
