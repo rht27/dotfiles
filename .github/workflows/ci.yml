@@ -1,0 +1,13 @@
+name: CI
+
+on: [push]
+
+jobs:
+  ubuntu:
+    runs-on: ubuntu-latest
+    container: ubuntu:latest
+    steps:
+      -name: install required packages
+        run: apt-get update && apt-get install -y curl git vim tmux
+      -name: install dotfiles
+        run: sh -c "$(curl -fsSL https://raw.githubusercontent.com/rht27/dotfiles/main/install.sh)"
