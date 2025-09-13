@@ -6,16 +6,16 @@ jobs:
   echo-hello:
     runs-on: ubuntu-latest
     steps:
-      -name: echo
-       run: echo "hello github actions"
+      - name: echo
+        run: echo "hello github actions"
 
   ubuntu:
     runs-on: ubuntu-latest
     container: ubuntu:latest
     steps:
-      -name: update apt
-       run: sudo apt-get update
-      -name: install required packages
-       run: apt-get install -y curl git vim tmux
-      -name: install dotfiles
-       run: sh -c "$(curl -fsSL https://raw.githubusercontent.com/rht27/dotfiles/main/install.sh)"
+      - name: update apt
+        run: sudo apt-get update
+      - name: install required packages
+        run: apt-get install -y curl git vim tmux
+      - name: install dotfiles
+        run: sh -c "$(curl -fsSL https://raw.githubusercontent.com/rht27/dotfiles/main/install.sh)"
