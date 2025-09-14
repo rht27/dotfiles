@@ -87,8 +87,8 @@ fi
 # install starship
 if ! command -v starship > /dev/null; then
     echo "installing starship ..."
-    cargo install --locked starship
-    # sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -y --bin-dir $HOME/.local/bin
+    # cargo install --locked starship
+    sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -y --bin-dir $HOME/.local/bin
 else
     echo "starship installed"
 fi
@@ -96,10 +96,12 @@ fi
 # install pueue
 if ! command -v pueue > /dev/null; then
     echo "installing pueue ..."
-    cargo install --locked pueue
+    # cargo install --locked pueue
     # curl -fsSL -o ~/.local/bin/pueue https://github.com/Nukesor/pueue/releases/download/v3.4.1/pueue-linux-x86_64
     # curl -fsSL -o ~/.local/bin/pueued https://github.com/Nukesor/pueue/releases/download/v3.4.1/pueued-linux-x86_64
-    # chmod u+x ~/.local/bin/pueue*
+    curl -fsSL -o ~/.local/bin/pueue https://github.com/Nukesor/pueue/releases/latest/download/pueue-x86_64-unknown-linux-musl
+    curl -fsSL -o ~/.local/bin/pueued https://github.com/Nukesor/pueue/releases/latest/download/pueued-x86_64-unknown-linux-musl
+    chmod u+x ~/.local/bin/pueue*
 else
     echo "pueue installed"
 fi
