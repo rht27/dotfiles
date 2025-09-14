@@ -120,6 +120,7 @@ if ! command -v yazi > /dev/null; then
     unzip -q ~/.local/yazi.zip -d ~/.local/yazi
     ln -snvf ~/.local/yazi/*/ya ~/.local/bin
     ln -snvf ~/.local/yazi/*/yazi ~/.local/bin
+    rm  ~/.local/yazi.zip
 else
     echo "yazi installed"
 fi
