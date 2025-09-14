@@ -16,7 +16,7 @@ jobs:
       - name: Update and install required packages
         run: |
           sudo apt-get update
-          sudo apt-get install -y curl git vim tmux
+          sudo apt-get install -y file curl git vim tmux gcc make
 
       - name: Setup Python
         uses: actions/setup-python@v6
@@ -27,4 +27,4 @@ jobs:
         run: curl -fsSL https://raw.githubusercontent.com/rht27/dotfiles/main/install.sh
 
       - name: Install dotfiles
-        run: sh install.sh
+        run: sh install_linux.sh

@@ -35,9 +35,9 @@ ln -snvf ~/dotfiles/.tmux.conf ~/
 # starship
 ln -snvf ~/dotfiles/.config/starship.toml ~/.config/starship.toml
 
-# ranger
-mkdir -p ~/.config/ranger
-ln -snvf ~/dotfiles/.config/ranger/rc.conf ~/.config/ranger/rc.conf
+# # ranger
+# mkdir -p ~/.config/ranger
+# ln -snvf ~/dotfiles/.config/ranger/rc.conf ~/.config/ranger/rc.conf
 
 
 echo "Install dependencies"
@@ -48,15 +48,46 @@ if [ -e ~/.profile ]; then
     if ! grep -q 'PATH="$HOME/.local/bin:$PATH"' ~/.profile; then
         echo 'PATH="$HOME/.local/bin:$PATH"' >> ~/.profile
     fi
+    . "$HOME/.profile"
 else
     echo "~/.profile does not exist"
     echo "Please set PATH to $HOME/.local/bin manually"
     echo '    PATH="$HOME/.local/bin:$PATH"'
 fi
 
+# # install brew
+# set +e
+# if ! command -v brew > /dev/null; then
+#     echo "installing brew ..."
+#     mkdir -p ~/.local/Homebrew
+#     curl -L https://github.com/Homebrew/brew/tarball/main | tar xz --strip-components 1 -C ~/.local/Homebrew
+#     ln -snvf ~/.local/Homebrew/bin/brew ~/.local/bin
+# else
+#     echo "brew installed"
+# fi
+# set -e
+
+# # update tmux to enable yazi image preview
+# if command -v brew > /dev/null; then
+#     echo "updating tmux ..."
+#     brew update
+#     brew install tmux
+# fi
+
+# install cargo
+if ! command -v cargo > /dev/null; then
+    echo "installing cargo ..."
+    curl https://sh.rustup.rs -sSf | sh -s -- -y
+    . "$HOME/.cargo/env"
+else
+    echo "cargo installed"
+    . "$HOME/.cargo/env"
+fi
+
 # install starship
 if ! command -v starship > /dev/null; then
     echo "installing starship ..."
+    # cargo install --locked starship
     sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -y --bin-dir $HOME/.local/bin
 else
     echo "starship installed"
@@ -65,17 +96,28 @@ fi
 # install pueue
 if ! command -v pueue > /dev/null; then
     echo "installing pueue ..."
-    curl -fsSL -o ~/.local/bin/pueue https://github.com/Nukesor/pueue/releases/download/v3.4.1/pueue-linux-x86_64
-    curl -fsSL -o ~/.local/bin/pueued https://github.com/Nukesor/pueue/releases/download/v3.4.1/pueued-linux-x86_64
+    # cargo install --locked pueue
+    # curl -fsSL -o ~/.local/bin/pueue https://github.com/Nukesor/pueue/releases/download/v3.4.1/pueue-linux-x86_64
+    # curl -fsSL -o ~/.local/bin/pueued https://github.com/Nukesor/pueue/releases/download/v3.4.1/pueued-linux-x86_64
+    curl -fsSL -o ~/.local/bin/pueue https://github.com/Nukesor/pueue/releases/latest/download/pueue-x86_64-unknown-linux-musl
+    curl -fsSL -o ~/.local/bin/pueued https://github.com/Nukesor/pueue/releases/latest/download/pueued-x86_64-unknown-linux-musl
     chmod u+x ~/.local/bin/pueue*
 else
     echo "pueue installed"
 fi
 
-# install ranger
-if ! command -v ranger > /dev/null; then
-    echo "installing ranger ..."
-    pip install --user ranger-fm
+# install yazi
+if ! command -v yazi > /dev/null; then
+    echo "installing yazi ..."
+    cargo install --force yazi-build
 else
-    echo "ranger installed"
+    echo "yazi installed"
 fi
+
+# # install ranger
+# if ! command -v ranger > /dev/null; then
+#     echo "installing ranger ..."
+#     pip install --user ranger-fm
+# else
+#     echo "ranger installed"
+# fi
