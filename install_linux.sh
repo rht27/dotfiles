@@ -55,24 +55,24 @@ else
     echo '    PATH="$HOME/.local/bin:$PATH"'
 fi
 
-# install brew
-set +e
-if ! command -v brew > /dev/null; then
-    echo "installing brew ..."
-    mkdir -p ~/.local/Homebrew
-    curl -L https://github.com/Homebrew/brew/tarball/main | tar xz --strip-components 1 -C ~/.local/Homebrew
-    ln -snvf ~/.local/Homebrew/bin/brew ~/.local/bin
-else
-    echo "brew installed"
-fi
-set -e
+# # install brew
+# set +e
+# if ! command -v brew > /dev/null; then
+#     echo "installing brew ..."
+#     mkdir -p ~/.local/Homebrew
+#     curl -L https://github.com/Homebrew/brew/tarball/main | tar xz --strip-components 1 -C ~/.local/Homebrew
+#     ln -snvf ~/.local/Homebrew/bin/brew ~/.local/bin
+# else
+#     echo "brew installed"
+# fi
+# set -e
 
-# update tmux to enable yazi image preview
-if command -v brew > /dev/null; then
-    echo "updating tmux ..."
-    brew update
-    brew install tmux
-fi
+# # update tmux to enable yazi image preview
+# if command -v brew > /dev/null; then
+#     echo "updating tmux ..."
+#     brew update
+#     brew install tmux
+# fi
 
 # install cargo
 if ! command -v cargo > /dev/null; then
