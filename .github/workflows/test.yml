@@ -27,4 +27,4 @@ jobs:
         run: curl -fsSL https://raw.githubusercontent.com/rht27/dotfiles/main/install.sh
 
       - name: Install dotfiles
-        run: sh install.sh
+        run: sh install_linux.sh
