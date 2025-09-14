@@ -55,17 +55,25 @@ else
     echo '    PATH="$HOME/.local/bin:$PATH"'
 fi
 
-# # install brew
-# set +e
-# if ! command -v brew > /dev/null; then
-#     echo "installing brew ..."
-#     mkdir -p ~/.local/Homebrew
-#     curl -L https://github.com/Homebrew/brew/tarball/main | tar xz --strip-components 1 -C ~/.local/Homebrew
-#     ln -snvf ~/.local/Homebrew/bin/brew ~/.local/bin
-# else
-#     echo "brew installed"
-# fi
-# set -e
+# install brew
+set +e
+if ! command -v brew > /dev/null; then
+    echo "installing brew ..."
+    git clone https://github.com/Homebrew/brew ~/.local/homebrew
+    eval "$(~/.local/homebrew/bin/brew shellenv)"
+    brew update --force --quiet
+    ln -snvf ~/.local/Homebrew/bin/brew ~/.local/bin
+else
+    echo "brew installed"
+fi
+set -e
+
+# install unzip
+if ! command -v unzip > /dev/null; then
+    brew install unzip
+else
+    echo "unzip installed"
+fi
 
 # # update tmux to enable yazi image preview
 # if command -v brew > /dev/null; then
@@ -74,15 +82,15 @@ fi
 #     brew install tmux
 # fi
 
-# install cargo
-if ! command -v cargo > /dev/null; then
-    echo "installing cargo ..."
-    curl https://sh.rustup.rs -sSf | sh -s -- -y
-    . "$HOME/.cargo/env"
-else
-    echo "cargo installed"
-    . "$HOME/.cargo/env"
-fi
+# # install cargo
+# if ! command -v cargo > /dev/null; then
+#     echo "installing cargo ..."
+#     curl https://sh.rustup.rs -sSf | sh -s -- -y
+#     . "$HOME/.cargo/env"
+# else
+#     echo "cargo installed"
+#     . "$HOME/.cargo/env"
+# fi
 
 # install starship
 if ! command -v starship > /dev/null; then
@@ -97,8 +105,6 @@ fi
 if ! command -v pueue > /dev/null; then
     echo "installing pueue ..."
     # cargo install --locked pueue
-    # curl -fsSL -o ~/.local/bin/pueue https://github.com/Nukesor/pueue/releases/download/v3.4.1/pueue-linux-x86_64
-    # curl -fsSL -o ~/.local/bin/pueued https://github.com/Nukesor/pueue/releases/download/v3.4.1/pueued-linux-x86_64
     curl -fsSL -o ~/.local/bin/pueue https://github.com/Nukesor/pueue/releases/latest/download/pueue-x86_64-unknown-linux-musl
     curl -fsSL -o ~/.local/bin/pueued https://github.com/Nukesor/pueue/releases/latest/download/pueued-x86_64-unknown-linux-musl
     chmod u+x ~/.local/bin/pueue*
@@ -109,7 +115,11 @@ fi
 # install yazi
 if ! command -v yazi > /dev/null; then
     echo "installing yazi ..."
-    cargo install --force yazi-build
+    # cargo install --force yazi-build
+    curl -fsSL -o ~/.local/yazi.zip https://github.com/sxyazi/yazi/releases/latest/download/yazi-x86_64-unknown-linux-musl.zip
+    unzip -q ~/.local/yazi.zip -d ~/.local/yazi
+    ln -snvf ~/.local/yazi/*/ya ~/.local/bin
+    ln -snvf ~/.local/yazi/*/yazi ~/.local/bin
 else
     echo "yazi installed"
 fi
