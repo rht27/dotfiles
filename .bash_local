@@ -10,5 +10,5 @@ if ! command -v l >/dev/null; then
 fi
 
 # starship
-eval "$(starship init bash)"
+eval "$(~/.local/bin/starship init bash)"
 
