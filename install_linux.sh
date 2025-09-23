@@ -14,8 +14,8 @@ else
         ln -snvf ~/dotfiles/.bashrc ~/
     fi
 fi
-if ! grep -q ". ~/dotfiles/.dotfiles.bashrc" ~/.bashrc; then
-    echo '. ~/dotfiles/.dotfiles.bashrc' >> ~/.bashrc
+if ! grep -q ". ~/dotfiles/.bash_local" ~/.bashrc; then
+    echo '. ~/dotfiles/.bash_local' >> ~/.bashrc
 fi
 
 # .profile
