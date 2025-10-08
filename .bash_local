@@ -9,6 +9,18 @@ if ! command -v l >/dev/null; then
     alias l='ls -CF'
 fi
 
+# set PATH
+if [ -d "$HOME/bin" ] ; then
+    export PATH="$HOME/bin:$PATH"
+fi
+if [ -d "$HOME/.local/bin" ] ; then
+    export PATH="$HOME/.local/bin:$PATH"
+fi
+
+if [ -d ~/.local/homebrew/bin/brew ]; then
+    eval "$(~/.local/homebrew/bin/brew shellenv)"
+fi
+
 # starship
-eval "$(~/.local/bin/starship init bash)"
+eval "$(starship init bash)"
 

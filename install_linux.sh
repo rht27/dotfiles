@@ -60,12 +60,12 @@ set +e
 if ! command -v brew > /dev/null; then
     echo "installing brew ..."
     git clone https://github.com/Homebrew/brew ~/.local/homebrew
-    eval "$(~/.local/homebrew/bin/brew shellenv)"
     brew update --force --quiet
     ln -snvf ~/.local/Homebrew/bin/brew ~/.local/bin
 else
     echo "brew installed"
 fi
+eval "$(~/.local/homebrew/bin/brew shellenv)"
 set -e
 
 # install unzip
