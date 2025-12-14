@@ -94,6 +94,17 @@ fi
 #     . "$HOME/.cargo/env"
 # fi
 
+# install bash completion
+if [ ! -e ~/.git-completion.bash ]; then
+    curl -fsSL -o ~/.git-completion.bash \
+        https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
+fi
+if [ ! -e ~/.git-prompt.sh ]; then
+    curl -fsSL -o ~/.git-prompt.sh \
+        https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
+fi
+
+
 # install starship
 if ! command -v starship > /dev/null; then
     echo "installing starship ..."

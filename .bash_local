@@ -21,8 +21,21 @@ if [ -d ~/.local/homebrew/bin/brew ]; then
     eval "$(~/.local/homebrew/bin/brew shellenv)"
 fi
 
+# bash completion
+source ~/.git-completion.bash
+source ~/.git-prompt.sh
+
 # starship
 eval "$(starship init bash)"
 
 bind 'set completion-ignore-case on'
+
+# yazi
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
+	rm -f -- "$tmp"
+}
 
