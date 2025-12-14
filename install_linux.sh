@@ -3,6 +3,7 @@
 echo "Start installation for Linux"
 
 echo "Check configs and make symbolic links"
+
 # .bashrc
 if [ -e ~/.bashrc ]; then
     echo "~/.bashrc already exists"
@@ -22,10 +23,11 @@ fi
 if [ -e ~/.profile ]; then
     echo "~/.profile already exists"
 else
-    echo "~/.profile does not exist and try to copy from /etc/skel/.profile"
-    if [ -e /etc/skel/.profile ]; then
-        cp -v /etc/skel/.profile ~/
-    fi
+    echo "~/.profile does not exist"
+    ln -snvf ~/dotfiles/.profile ~/
+    # if [ -e /etc/skel/.profile ]; then
+    #     cp -v /etc/skel/.profile ~/
+    # fi
 fi
 
 mkdir -p ~/.config
