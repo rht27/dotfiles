@@ -3,6 +3,7 @@
 echo "Start installation for Linux"
 
 echo "Check configs and make symbolic links"
+
 # .bashrc
 if [ -e ~/.bashrc ]; then
     echo "~/.bashrc already exists"
@@ -22,10 +23,11 @@ fi
 if [ -e ~/.profile ]; then
     echo "~/.profile already exists"
 else
-    echo "~/.profile does not exist and try to copy from /etc/skel/.profile"
-    if [ -e /etc/skel/.profile ]; then
-        cp -v /etc/skel/.profile ~/
-    fi
+    echo "~/.profile does not exist"
+    ln -snvf ~/dotfiles/.profile ~/
+    # if [ -e /etc/skel/.profile ]; then
+    #     cp -v /etc/skel/.profile ~/
+    # fi
 fi
 
 mkdir -p ~/.config
@@ -91,6 +93,17 @@ fi
 #     echo "cargo installed"
 #     . "$HOME/.cargo/env"
 # fi
+
+# install bash completion
+if [ ! -e ~/.git-completion.bash ]; then
+    curl -fsSL -o ~/.git-completion.bash \
+        https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
+fi
+if [ ! -e ~/.git-prompt.sh ]; then
+    curl -fsSL -o ~/.git-prompt.sh \
+        https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
+fi
+
 
 # install starship
 if ! command -v starship > /dev/null; then
